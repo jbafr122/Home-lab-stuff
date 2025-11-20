@@ -20,7 +20,7 @@ Tailscale VPN - Installed on each device to ensure each VM/LXC is on the tailnet
 
 Pihole LXC - DNS filtering and AD blocking
 
-TODO: Host Kubernetes cluster with seperate LXC/VMs as nodes and possibly use that as a MC Server
+TODO: Host Kubernetes cluster with seperate LXC/VMs as nodes
 
 TODO: Create Python script to sort files in TrueNAS storage to proper location (game files, photos, movies)
 
