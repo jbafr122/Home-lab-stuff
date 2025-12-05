@@ -12,11 +12,11 @@ Proxmox VE - Main Machine OS
 
 Ubuntu Server OS - MC Server Hosting
 
-TrueNAS (Storage across VLAN) - LXC or VM? Separate movie downloads and game files
+TrueNAS VM (Storage across VLAN) - Separate movie downloads and game files
 
-LXC Python + Docker Testing - Hosting LXC to practice python in isolated environment and practicing Docker
+LXC Python + Docker Testing - Hosting LXC to practice python and other stuff 
 
-Tailscale VPN - Installed on each device to ensure each VM/LXC is on the tailnet(VLAN) enabling remote access
+Tailscale installed on bare metal to enable remote access
 
 Pihole LXC - DNS filtering and AD blocking
 
