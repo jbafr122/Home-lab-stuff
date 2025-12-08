@@ -3,7 +3,7 @@ Notes and scripts used for home lab project
 Notion: https://www.notion.so/Home-lab-Notes-2933e382ce978062aca2d6f7d7c78537?source=copy_link
 
 Tech Stack
-CPU - i5-1200f, 6 cores
+CPU - i5-12400f, 6 cores
 GPU - Intel Arc 380
 RAM - 32GB (want to get to 64)
 8TB HDD
