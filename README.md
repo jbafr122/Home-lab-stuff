@@ -18,7 +18,4 @@ Tailscale installed to enable remote access
 
 Pihole LXC - DNS filtering and AD blocking
 
-TODO: Host Kubernetes cluster with seperate LXC/VMs as nodes
-
-TODO: Create Python script to sort files in TrueNAS storage to proper location (game files, photos, movies)
 
