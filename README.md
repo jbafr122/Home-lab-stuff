@@ -18,4 +18,6 @@ Tailscale installed to enable remote access
 
 Pihole LXC - DNS filtering and AD blocking
 
+Kali VM - PortSwigger Labs
+
 
