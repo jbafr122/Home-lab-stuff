@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mc-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 14Gi # Bumped up to give your 12G RAM server room to breathe
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bcg-minecraft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bcg-minecraft
+  template:
+    metadata:
+      labels:
+        app: bcg-minecraft
+    spec:
+      containers:
+      - name: minecraft
+        image: itzg/minecraft-server:java21
+        env:
+        - name: EULA
+          value: "TRUE"
+        - name: TYPE
+          value: "FABRIC"
+        - name: VERSION
+          value: "1.20.1"
+        - name: MEMORY
+          value: "10G"
+        ports:
+        - containerPort: 25565
+          name: mc-port
+        volumeMounts:
+        - name: mc-volume-mapping # Name 1
+          mountPath: /data
+        - name: host-local-mods  # Name 2
+          mountPath: /data/mods
+
+      volumes:
+      - name: mc-volume-mapping # Matches Name 1
+        persistentVolumeClaim:
+          claimName: mc-data-pvc # Matches the PVC metadata name at the top
+      - name: host-local-mods  # Matches Name 2
+        hostPath:
+          path: /home/orion/server-stuff/mods
+          type: Directory
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: bcg-minecraft-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: bcg-minecraft # This must match the label in your deployment template
+  ports:
+    - protocol: TCP
+      port: 25565
+      targetPort: 25565
