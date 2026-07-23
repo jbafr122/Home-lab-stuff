@@ -1,0 +1,7 @@
+When allocating more storage to a VM we have to manually extend to make it so that we make full use of the new added storage
+
+sudo growpart /dev/sda 3
+sudo pvresize /dev/sda3
+sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
+sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+
