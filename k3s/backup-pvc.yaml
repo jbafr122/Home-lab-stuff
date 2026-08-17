@@ -1,3 +1,5 @@
+# PVC for backup storage in case we need to revert to a previos version
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -6,4 +8,4 @@ spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
-      storage: 20Gi  # How much storage is allocated to the PVC
+      storage: 20Gi  
