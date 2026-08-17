@@ -1,0 +1,34 @@
+# In order to enable easy and secure file transfers, I added a sidecar pod that is running tailscasle and filebrowser in 2 separate containers. Allowing for manual backups if needed and transfer of big mod files without using kubectl cp
+# Create a Tailscale token and save it as a kubernetes secret
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sidecar
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: { app: filebrowser }
+  template:
+    metadata:
+      labels: { app: filebrowser }
+    spec:
+      containers:
+        - name: tailscale
+          image: ghcr.io/tailscale/tailscale:latest
+          env:
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef: { name: tailscale-auth, key: TS_AUTHKEY }
+            - { name: TS_USERSPACE, value: "true" }   # no NET_ADMIN / privileged mode needed
+            - { name: TS_EXTRA_ARGS, value: "--hostname=filebrowser" }
+            - { name: TS_KUBE_SECRET, value: ""}
+        - name: filebrowser
+          image: filebrowser/filebrowser:latest
+          volumeMounts:
+            - { name: data, mountPath: /srv}
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: minecraft-data }
