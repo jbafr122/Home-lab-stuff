@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frpc-config
+data:
+  frpc.toml: |
+    serverAddr = "USE THE PUBLIC IP ASSOCIATED WITH THE ORACLE VM"
+    serverPort = 7000
+
+    auth.method = "token"
+    auth.token = "USE THE TOKEN FROM THE frpc file created on the ORACLE VM"
+
+    [[proxies]]
+    name = "minecraft"
+    type = "tcp"
+    localIP = "<NAME OF SERVICE>.default.svc.cluster.local"
+    localPort = 25565
+    remotePort = 25565
