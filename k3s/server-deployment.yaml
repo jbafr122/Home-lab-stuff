@@ -1,1 +1,37 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate   # never run 2 copies against the same world at once
+  selector:
+    matchLabels: { app: minecraft }
+  template:
+    metadata:
+      labels: { app: minecraft }   # must match service's selector
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server:java21 # JAVA version may be different. Check which version is needed for the modpack version
+          env:
+            - { name: EULA, value: "TRUE" }
+            - { name: TYPE, value: "AUTO_CURSEFORGE" }
+            - { name: CF_API_KEY_FILE, value: "/run/secrets/cf-api-key" } # The saved secret api key for auto pulling from curseforge
+            - { name: CF_SLUG, value: "INSERT THE SLUG ASSOCIATED WITH THE MODPACK" }     # e.g. "all-the-mods-9"
+            - { name: CF_FILE_ID, value: "INSERT FILE ID THAT MATCHES WITH THE MODPACK VERSION" }       # pin a specific version!
+            - { name: MEMORY, value: "30G" }
+            - { name: RCON_PASSWORD, value: "password" }  # must be IDENTICAL to the value in cron and restore job files
+          ports:
+            - containerPort: 25565
+            - containerPort: 25575   # rcon
+          volumeMounts:
+            - { name: data, mountPath: /data }
+            - { name: cf-api-key, mountPath: /run/secrets, readOnly: true }
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: minecraft-data }
+        - name: cf-api-key
+          secret: { secretName: cf-api-key }
