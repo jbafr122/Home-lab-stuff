@@ -1,7 +1,5 @@
 # Game Server Infrastructure
 
-Self-hosted Minecraft server running on Kubernetes, exposed to the internet via a reverse tunnel to an Oracle Cloud VPS — no port forwarding or exposed home IP required.
-
 ---
 
 ## File Layout
