@@ -1,0 +1,23 @@
+# Sets up the tunnel between the ORACLE VM and the home server
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frpc
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: frpc }
+  template:
+    metadata:
+      labels: { app: frpc }
+    spec:
+      containers:
+        - name: frpc
+          image: ghcr.io/fatedier/frpc:v0.70.1
+          args: ["-c", "/etc/frp/frpc.toml"]  # Make sure the frpc.toml is correct
+          volumeMounts:
+            - { name: config, mountPath: /etc/frp }
+      volumes:
+        - name: config
+          configMap: { name: frpc-config }
