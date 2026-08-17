@@ -1,0 +1,13 @@
+// Tunnel config on home server machine
+[Unit]
+Description=frp server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/ubuntu/frp_0.70.1_linux_arm64/frps -c /home/ubuntu/frp_0.70.1_linux_arm64/frps.toml
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
