@@ -1,0 +1,10 @@
+# Config file on the host. Corresponding with the one on the ORACLE VM
+
+bindPort = 7000
+
+auth.method = "token"
+auth.token = "INSERT TOKEN THAT IS INSERTED IN THE TOML FILE ON ORACLE VM"
+
+allowPorts = [
+  { start = 25565, end = 25565 }
+]
