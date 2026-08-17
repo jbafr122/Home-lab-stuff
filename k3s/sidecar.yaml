@@ -1,0 +1,20 @@
+# A pod connected to the pvc in order for manually adding mods and debugging issues 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+spec:
+  containers:
+    - name: debug
+      image: ubuntu:latest
+      command: ["/bin/bash", "-c", "--"]
+      args: ["while true; do sleep 30; done;"]
+      # Mount the volume inside the container
+      volumeMounts:
+        - name: storage
+          mountPath: /data
+  volumes:
+    - name: storage
+      persistentVolumeClaim:
+        claimName: minecraft-data
