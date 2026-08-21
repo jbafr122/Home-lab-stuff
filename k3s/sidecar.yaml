@@ -1,5 +1,6 @@
 # In order to enable easy and secure file transfers, I added a sidecar pod that is running tailscasle and filebrowser in 2 separate containers. Allowing for manual backups if needed and transfer of big mod files without using kubectl cp
 # Create a Tailscale token and save it as a kubernetes secret
+# kubectl create secret generic tailscale-auth --from-literal=TS_AUTHKEY='tskey-auth-your-actual-key'
 
 apiVersion: apps/v1
 kind: Deployment
